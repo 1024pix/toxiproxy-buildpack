@@ -15,7 +15,7 @@ tmp_dir="${tmp_dir%/}"
 mkdir -p "$BUILD_DIR/bin"
 
 echo "Downloading toxiproxy v${TOXIPROXY_VERSION}..."
-wget -O $tmp_dir/toxiproxy.tar.gz https://github.com/Shopify/toxiproxy/releases/download/v${TOXIPROXY_VERSION}/toxiproxy_${TOXIPROXY_VERSION}_amd64.tar.gz
+wget -O $tmp_dir/toxiproxy.tar.gz https://github.com/Shopify/toxiproxy/releases/download/v${TOXIPROXY_VERSION}/toxiproxy_${TOXIPROXY_VERSION}_linux_amd64.tar.gz
 
 echo "$TOXIPROXY_CHECKSUM $tmp_dir/toxiproxy.tar.gz" | sha256sum -c -
 
