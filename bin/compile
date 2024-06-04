@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+TOXIPROXY_VERSION="${TOXIPROXY_VERSION:=2.9.0}"
+TOXIPROXY_CHECKSUM="${TOXIPROXY_CHECKSUM:=4c0a4f538f2b85ff44b8ca82977f5d1e6ac874b60c9f216ad4c8269d36312b86}"
+
+BP_DIR="$(cd $(dirname "$0"); pwd)"
+BUILD_DIR="$1"
+
+test -z "$tmp_dir" && tmp_dir="$(mktemp -d)"
+mkdir -p "${tmp_dir}"
+tmp_dir="${tmp_dir%/}"
+
+mkdir -p "$BUILD_DIR/bin"
+
+echo "Downloading toxiproxy v${TOXIPROXY_VERSION}..."
+wget -O $tmp_dir/toxiproxy.tar.gz https://github.com/Shopify/toxiproxy/releases/download/v${TOXIPROXY_VERSION}/toxiproxy_${TOXIPROXY_VERSION}_amd64.tar.gz
+
+echo "$TOXIPROXY_CHECKSUM $tmp_dir/toxiproxy.tar.gz" | sha256sum -c -
+
+echo "Extracting toxiproxy..."
+tar -xzf $tmp_dir/toxiproxy.tar.gz -C "$BUILD_DIR/bin"
+
+cp "${BP_DIR}"/../scripts/start_toxiproxy.sh "${BUILD_DIR}/bin"

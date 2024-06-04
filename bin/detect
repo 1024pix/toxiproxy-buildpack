@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+echo "Toxiproxy"
+exit 0
